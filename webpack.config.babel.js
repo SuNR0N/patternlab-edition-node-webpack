@@ -30,7 +30,7 @@ module.exports = env => {
             resolve(__dirname, `${plConfig.paths.source.js}**/*.js`),
             "!**/*.test.js"
           ])
-          .map(function(filePath) {
+          .map(function (filePath) {
             return filePath;
           })
       },
@@ -100,10 +100,10 @@ module.exports = env => {
         ]),
         ifDevelopment(
           new EventHooksPlugin({
-            afterEmit: function(compilation) {
+            afterEmit: function (compilation) {
               const supportedTemplateExtensions = patternEngines.getSupportedFileExtensions();
               const templateFilePaths = supportedTemplateExtensions.map(
-                function(dotExtension) {
+                function (dotExtension) {
                   return `${plConfig.paths.source.patterns}**/*${dotExtension}`;
                 }
               );
@@ -120,10 +120,10 @@ module.exports = env => {
 
               const allWatchFiles = watchFiles.concat(templateFilePaths);
 
-              allWatchFiles.forEach(function(globPath) {
+              allWatchFiles.forEach(function (globPath) {
                 const patternFiles = globby
                   .sync(globPath)
-                  .map(function(filePath) {
+                  .map(function (filePath) {
                     return resolve(__dirname, filePath);
                   });
                 patternFiles.forEach(item => {
@@ -134,7 +134,7 @@ module.exports = env => {
           })
         ),
         new EventHooksPlugin({
-          done: function(stats) {
+          done: function (stats) {
             let cleanPublic = plConfig.cleanPublic;
             process.argv.forEach((val, index) => {
               if (val.includes("cleanPublic")) {
@@ -143,7 +143,7 @@ module.exports = env => {
               }
             });
 
-            patternlab.build(() => {}, cleanPublic);
+            patternlab.build(() => { }, cleanPublic);
           }
         })
       ]),
